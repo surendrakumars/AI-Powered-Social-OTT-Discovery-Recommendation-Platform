@@ -1,9 +1,7 @@
 import axios from 'axios';
 
 const isProd = import.meta.env.PROD;
-const envUrl = import.meta.env.VITE_API_URL 
-  ? `${import.meta.env.VITE_API_URL}/api/v1` 
-  : import.meta.env.VITE_API_BASE_URL;
+const envUrl = import.meta.env.VITE_API_BASE_URL;
 
 if (isProd && !envUrl) {
   throw new Error("VITE_API_BASE_URL is required in production builds.");
