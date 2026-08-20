@@ -14,6 +14,10 @@ try:
         with engine.connect() as conn:
             pass
 except Exception as e:
+    import os
+    if os.getenv("ENVIRONMENT") == "production":
+        print(f"CRITICAL: PostgreSQL connection failed in production: {e}")
+        raise e
     print(f"PostgreSQL connection unavailable ({e}). Falling back to local SQLite database (ott_discovery.db).")
     sqlite_url = "sqlite:///./ott_discovery.db"
     engine = create_engine(sqlite_url, connect_args={"check_same_thread": False})

@@ -10,10 +10,13 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = os.getenv("ENVIRONMENT", "development")
     
     # Database
-    DATABASE_URL: str = os.getenv(
-        "DATABASE_URL", 
-        "postgresql://postgres:postgres@localhost:5432/ott_discovery"
+    DATABASE_URL: str = os.getenv("DATABASE_URL") or (
+        "postgresql://postgres:postgres@localhost:5432/ott_discovery" 
+        if os.getenv("ENVIRONMENT") != "production" else ""
     )
+    
+    # CORS
+    CORS_ORIGINS: str = os.getenv("CORS_ORIGINS", "http://localhost:5173")
     
     # Security
     JWT_SECRET: str = os.getenv("JWT_SECRET", "supersecretjwtkey_change_in_production")

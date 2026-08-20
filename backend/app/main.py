@@ -2,8 +2,6 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-import ssl
-ssl._create_default_https_context = ssl._create_unverified_context
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,7 +12,11 @@ from app.db.init_db import init_db
 try:
     init_db()
 except Exception as e:
-    print(f"Database initialization warning: {e}")
+    import os
+    if os.getenv("ENVIRONMENT") == "production":
+        print(f"CRITICAL: Database initialization failed in production: {e}")
+        raise e
+    print(f"Database initialization warning (development): {e}")
 
 app = FastAPI(
     title="OTT Discovery API",
@@ -23,9 +25,11 @@ app = FastAPI(
 )
 
 # CORS configuration
+from app.core.config import settings
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # For dev only
+    allow_origins=settings.CORS_ORIGINS.split(","),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

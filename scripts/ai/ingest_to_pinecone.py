@@ -6,8 +6,7 @@ import pandas as pd
 from dotenv import load_dotenv
 from pinecone import Pinecone, ServerlessSpec
 
-import ssl
-ssl._create_default_https_context = ssl._create_unverified_context
+
 
 # Load environment variables
 load_dotenv()
