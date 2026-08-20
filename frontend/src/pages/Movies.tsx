@@ -27,7 +27,7 @@ export default function Movies() {
     const titleMatch = movie.title.toLowerCase().includes(query);
     const genreMatch = Array.isArray(movie.genres) 
       ? movie.genres.some(g => g.toLowerCase().includes(query))
-      : (typeof movie.genres === 'string' && movie.genres.toLowerCase().includes(query));
+      : (typeof movie.genres === 'string' && (movie.genres as string).toLowerCase().includes(query));
     return titleMatch || genreMatch;
   });
 

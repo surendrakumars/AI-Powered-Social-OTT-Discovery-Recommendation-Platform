@@ -27,7 +27,7 @@ const YEAR_OPTIONS = [
 ];
 
 export default function Onboarding() {
-  const { user } = useAuth();
+  useAuth();
   const navigate = useNavigate();
 
   const [step, setStep] = useState(1);

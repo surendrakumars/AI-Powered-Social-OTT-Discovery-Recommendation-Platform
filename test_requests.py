@@ -17,7 +17,7 @@ payload = {
     "max_tokens": 100
 }
 try:
-    response = requests.post(API_URL, headers=headers, json=payload, verify=False)
+    response = requests.post(API_URL, headers=headers, json=payload)
     print("Status Code:", response.status_code)
     print("Response:", response.json())
 except Exception as e:
